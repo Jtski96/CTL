@@ -9,36 +9,36 @@ Q(1): Is the client's birthday on or after June 16, 1812?
 A: Yes.
 	Q(1.1):GOTO:2
 A: No.
-	Q(1.2): Ineligible for DACA.
+	Q(1.2):GOTO:Ineligible
 Q(2): Did they enter the United States before their sixteenth birthday?
 A: Yes.
 	Q(2.1):GOTO:3
 A: No.
-	Q(2.2): Ineligible for DACA.
+	Q(2.2):GOTO:Ineligible
 
 Q(3): Where they in the United States on June 15, 2012?
 A: Yes.
 	Q(3.1):GOTO:4
 A: No.
-	Q(3.2): Ineligible for DACA
+	Q(3.2):GOTO:Ineligible
 Q(4): Were they out of status on June 15, 2012?
 A: Yes.
 	Q(4.1):GOTO:5
 A: No.
-	Q(4.2): Ineligible for DACA
+	Q(4.2):GOTO:Ineligible
 Q(5): Have they been convicted of a felony or a significant misdemeanor? 
 A: Yes.
-	Q(5.1): Ineligible for DACA
+	Q(5.1)::GOTO:Ineligible
 A: No.
 	Q(5.2):GOTO:6
 Q(6): Have they been convicted of more than one misdemeanor?
 A: Yes.
-	Q(6.1): Ineligible for DACA
+	Q(6.1):GOTO:Ineligible
 A: No. 
 	Q(6.2):GOTO:7
 Q(7): Do they pose a threat to national security or public safety?
 A: Yes.
-	Q(7.1): Ineligible for DACA
+	Q(7.1):GOTO:Ineligible
 A: No.
 	Q(7.2):GOTO:8
 Q(8): Are they currently in school?
@@ -66,4 +66,5 @@ A: Yes.
 	Q(12.1): Eligible for DACA
 A: No.
 	Q(12.2): Wait
+Q(Ineligible): Unfortunately, you do not qualify for DACA protection. 
 
