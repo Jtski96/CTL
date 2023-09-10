@@ -1,0 +1,88 @@
+Title: Indigency "Flowchart"
+Author: Jacob Wronski
+Description: <link rel="stylesheet" type="text/css" href="https://suffolklitlab.org/howto/qna/style/style.css">
+<div id="icon" style="background-size: 110px 99px;background-image: url('https://suffolklitlab.org/howto/qna/images/maxheadroom.gif');"></div>
+<h2 style="text-align:center;">Indigency "Flowchart"</h2>
+<p><b>This is a <a href="https://www.codingthelaw.org/level/2/#mission_p1">class project</a>. You should not rely on it as a source of legal information!</b></p>
+<p>Answer the following questions to see if you qualify for appointed counsel in [insert state name].</p>
+
+Q(name): Welcome, what is your name? 
+X:
+	Q(1.1):Hello <X>name</X>. GOTO:2
+Q(2): Please answer the following questions to help determine if you are eligible for appointed counsel under Montana Law. Would you like to continue?
+A: Yes
+	Q(2.1):GOTO:Crime
+A: No.
+	Q(2.2): Have a nice day.
+Q(Crime): Are you being charged with a crime that could result in a prison sentence (a felony)?
+A: Yes
+	Q(Crime.1):GOTO:4
+A: No
+	Q(Crime.2):GOTO:ineligible
+Q(4): How many people reside in your household?
+	
+A: 1
+	Q(4.1): Is your gross annual income (including public assistance) equal to or less than $19,391?
+	A: Yes
+		Q(4.1.1):GOTO:Eligible
+	A: No
+		Q(4.1.2):GOTO:Substantial
+A: 2
+	Q(4.2): Is your gross annual income (including public assistance) equal to or less than $26,227?
+	A: Yes
+		Q(4.2.1):GOTO:Eligible
+	A: No
+		Q(4.2.2):GOTO:Substantial
+A: 3
+	Q(4.3): Is your gross annual income (including public assistance) equal to or less than $33,063?
+	A: Yes
+		Q(4.3.1):GOTO:Eligible
+	A: No
+		Q(4.3.2):GOTO:Substantial
+A: 4
+	Q(4.4): Is your gross annual income (including public assistance) equal to or less than $39,900?
+	A: Yes
+		Q(4.4.1):GOTO:Eligible
+	A: No
+		Q(4.4.2):GOTO:Substantial
+A: 5
+	Q(4.5): Is your gross annual income (including public assistance) equal to or less than $46,736?
+	A: Yes
+		Q(4.5.1):GOTO:Eligible
+	A: No
+		Q(4.5.2):GOTO:Substantial
+A: 6
+	Q(4.6): Is your gross annual income (including public assistance) equal to or less than $53,572?
+	A: Yes
+		Q(4.6.1):GOTO:Eligible
+	A: No
+		Q(4.6.2):GOTO:Substantial
+A: 7
+	Q(4.7): Is your gross annual income (including public assistance) equal to or less than $60,408?
+	A: Yes
+		Q(4.7.1):GOTO:Eligible
+	A: No
+		Q(4.7.2):GOTO:Substantial
+A: 8
+	Q(4.8): Is your gross annual income (including public assistance) equal to or less than $67,836?
+	A: Yes
+		Q(4.8.1):GOTO:Eligible
+	A: No
+		Q(4.8.2):GOTO:Substantial
+A: More than 8
+	Q(4.9): Is your gross annual income (including public assistance) equal to or less than $67,836 plus $6,836 for every additional person in the household?
+	A: Yes
+		Q(4.9.1):GOTO:Eligible
+	A: No
+		Q(4.9.2):GOTO:Substantial
+
+Q(Eligible): Your gross income is within 133% of the national poverty guidelines and you are eligible for counsel at no cost.
+Q(Substantial): Are your disposable income and assets insufficient to retain a competent private counsel without substantial hardship to yourself or a member of your household?
+A: Yes
+	Q(Substantial.1):GOTO:Eligible
+A: No
+	Q(Substantial.2):GOTO:ineligible
+A: Maybe
+	Q(Substantial.3): Please contact your local Public Defenders Service to determine if you qualify based on substantial hardship.
+Q(ineligible): Unfortunately, you do not qualify for public defender assistance.
+	
