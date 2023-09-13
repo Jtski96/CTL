@@ -1,0 +1,73 @@
+Title: Indigency "Flowchart"
+Author: Jacob Wronski
+Before: <link rel="stylesheet" type="text/css" href="https://suffolklitlab.org/howto/qna/style/style.css">
+<div id="icon" style="background-size: 110px 99px;background-image: url('https://suffolklitlab.org/howto/qna/images/maxheadroom.gif');"></div>
+<h2 style="text-align:center;">DACA "Flowchart"</h2>
+<p><b>This is a <a href="https://www.codingthelaw.org/#mission">class project</a>. You should not rely on it as a source of legal information!</b></p>
+<p>Answer the following questions to see if you qualify for appointed counsel in Montana.</p>
+After:
+<script>
+function fedpov(house,income,percentage){
+	// Determines if your income is less than or equal to
+	// a percentage of the 2023 federal poverty guidelines
+	// for the contiguous United States. See
+	// https://aspe.hhs.gov/poverty-guidelines
+
+		var line = NaN;
+
+		if (house == 1) {
+			line = 14580;
+		} else if (house == 2) {
+			line = 19720;
+		} else if (house == 3) {
+			line = 24860;
+		} else if (house == 4) {
+			line = 30000;
+		} else if (house == 5) {
+			line = 35140;
+		} else if (house == 6) {
+			line = 40280;
+		} else if (house == 7) {
+			line = 45420;
+		} else if (house == 8) {
+			line = 50560;
+		} else if (house > 8) {
+			line = 50560 + (house-8)*5140;
+		}
+
+		if (income <= (line*(percentage/100))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+</script>
+
+Q(name): Welcome, what is your name? 
+X:
+	Q(1.1):Hello <X>name</X>. GOTO:2
+Q(2): Please answer the following questions to help determine if you are eligible for appointed counsel under Montana Law. Would you like to continue?
+A: Yes.
+	Q(2.1):GOTO:house
+A: No.
+	Q(2.2): Have a nice day.
+Q(house): How many people are in your household?
+X:number
+	Q(income): How much income does your household bring in per year in after tax dollars?
+	X:number
+		Q(crime): Does the crime you are charged with carry a potential prison sentence?
+		A[javascript:if (fedpov(getvar('house'),getvar('income'),133)){ goto('eligible') } else { goto('substantial') } ]: Yes
+		A: No
+			Q(crime.2):GOTO:ineligible
+			
+Q(eligible): <X>name</X>, Your gross income is within 133% of the national poverty guidelines and you are eligible for counsel at no cost.
+Q(substantial): Are your disposable income and assets insufficient to retain a competent private counsel without substantial hardship to yourself or a member of your household?
+A: Yes
+	Q(substantial.1):GOTO:eligible
+A: No
+	Q(substantial.2):GOTO:ineligible
+A: Maybe
+	Q(substantial.3): <X>name</X>, Please contact your local Public Defenders Service to determine if you qualify based on substantial hardship.
+Q(ineligible): Unfortunately, <X>name</X>, you likely do not qualify for public defender assistance.
+
+
