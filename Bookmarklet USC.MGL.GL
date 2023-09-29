@@ -1,0 +1,17 @@
+regex = /(\d+) U\.S\.C\. § (\d+)( \(\d{4}\))?/g
+
+replace_str = '<a href="https://www.law.cornell.edu/uscode/text/$1/$2">$1 U.S.C. § $2$3</a>'
+
+document.body.innerHTML = document.body.innerHTML.replace(regex, replace_str);
+
+regex = / M\.G\.L\. c. (\d+), § (\d+)?/g
+
+replace_str = '<a href="https://malegislature.gov/Laws/GeneralLaws/Chapter$1/Section$2">M.G.L. $1, § $2$3</a>'
+
+document.body.innerHTML = document.body.innerHTML.replace(regex, replace_str);
+
+regex = / G\.L\. c. (\d+), § (\d+)?/g
+
+replace_str = '<a href="https://malegislature.gov/Laws/GeneralLaws/Chapter$1/Section$2">G.L. $1, § $2$3</a>'
+
+document.body.innerHTML = document.body.innerHTML.replace(regex, replace_str);
