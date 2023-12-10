@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project Bio</title>
+    <style>
+        .tabcontent {
+            display: none;
+        }
+        .tabcontent.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data-Scraping Bookmarklet</h1>
+
+    <ul>
+        <li><button onclick="openTab('Home')">Home</button></li>
+        <li><button onclick="openTab('ProjectOrigin')">Project Origin</button></li>
+        <li><button onclick="openTab('Building')">Building</button></li>
+        <li><button onclick="openTab('Testing')">Testing</button></li>
+        <li><button onclick="openTab('BuildingAgain')">Building Again</button></li>
+        <li><button onclick="openTab('MVP')">MVP and Next Steps</button></li>
+        <li><button onclick="openTab('TryMe')">Try Me Out!</button></li>
+    </ul>
+
+    <div id="Home" class="tabcontent active">
+        <h2>Home</h2>
+        <h3>Introduction</h3>
+        <p>Hello World! This Data-Scraping Bookmarklet can be used to extract data from webpages, and save it as a CSV. 
+        </p>
+        <p>
+            Feel free to give it a try. You can click and drag the Bookmarklet into your bookmark bar. Next, go to the "Try Me Out!" page and open the bookmarklet. It will give you a menu to select certain patterns to extract. The bookmarklet will run a pre-set Regular expression string to pull all matches. Finally, downlload the CSV file to save your matches.
+        </p>
+        <p>
+            Poke around the rest of the site if you're interested in how this project came together. 
+        <p>
+    
+        <h3>Bookmarklet</h3>
+        <a id="Bookmarklet" href="javascript:(function()%7Bvar%20selectedPatternIndex%3B%0Avar%20formattedDate%3B%20%0Awindow.results%20%3D%20%22%22%3B%20%0Awindow.currentPatternName%20%3D%20%22%22%3B%0A%0A%0Awindow.download_csv%20%3D%20function%20()%20%7B%0A%20%20%2F%2F%20Ensure%20that%20formattedDate%20is%20defined%0A%20%20formattedDate%20%3D%20formattedDate%20%7C%7C%20(new%20Date().toLocaleDateString().replace(%2F%5C%2F%2Fg%2C%20'.'))%3B%0A%0A%20%20%2F%2F%20Get%20the%20header%20without%20the%20EOL%0A%20%20var%20header%20%3D%20patterns%5BselectedPatternIndex%5D.defaultHeader%3B%0A%0A%20%20%2F%2F%20Add%20the%20header%20to%20the%20beginning%20of%20the%20CSV%20content%20with%20a%20line%20break%0A%20%20var%20csvContent%20%3D%20header%20%2B%20'%5Cn'%20%2B%20window.results%3B%0A%0A%20%20%2F%2F%20Add%20the%20URL%20to%20the%20csvContent%0A%20%20var%20url%20%3D%20window.location.href%3B%0A%20%20csvContent%20%2B%3D%20%22%5CnURL%2C%22%20%2B%20url%3B%0A%0A%20%20%2F%2F%20Create%20a%20dynamic%20filename%0A%20%20var%20filename%20%3D%20window.currentPatternName%20%2B%20'_'%20%2B%20formattedDate%20%2B%20'.csv'%3B%0A%0A%20%20var%20element%20%3D%20document.createElement('a')%3B%0A%20%20element.setAttribute('href'%2C%20'data%3Atext%2Fplain%3Bcharset%3Dutf-8%2C'%20%2B%20encodeURIComponent(csvContent))%3B%0A%20%20element.setAttribute('download'%2C%20filename)%3B%0A%0A%20%20element.style.display%20%3D%20'none'%3B%0A%20%20document.body.appendChild(element)%3B%0A%0A%20%20element.click()%3B%0A%0A%20%20document.body.removeChild(element)%3B%0A%7D%0A%0A%20%20var%20patterns%20%3D%20%5B%0A%20%20%20%20%7B%20name%3A%20'Select%20a%20Pattern'%2C%20regex%3A%20%22%22%2C%20defaultGroups%3A%20'0'%2C%20defaultHeader%3A%20''%2C%20defaultdelimiter%3A%20''%2C%20defaulteol%3A%20'%5C%5Cn'%20%7D%2C%0A%20%20%20%20%7B%20name%3A%20'Emails'%2C%20regex%3A%20%22%5BA-Za-z0-9._%25%2B-%5D%2B%40%5BA-Za-z0-9.-%5D%2B%5C%5C.%5BA-Z%7Ca-z%5D%7B2%2C%7D%22%2C%20defaultGroups%3A%20'0'%2C%20defaultHeader%3A%20'Email'%2C%20defaultdelimiter%3A%20'%2C'%2C%20defaulteol%3A%20'%5C%5Cn'%20%7D%2C%0A%20%20%20%20%7B%20name%3A%20'Phone%20Numbers'%2C%20regex%3A%20%22(%5C%5C(%5C%5Cd%7B3%7D%5C%5C)%7C%5C%5Cd%7B3%7D)%5B-.%5C%5Cs%5D%3F%5C%5Cd%7B3%7D%5B-.%5C%5Cs%5D%3F%5C%5Cd%7B4%7D%22%2C%20defaultGroups%3A%20'0'%2C%20defaultHeader%3A%20'Phone%20Number'%2C%20defaultdelimiter%3A%20'%2C'%2C%20defaulteol%3A%20'%5C%5Cn'%20%7D%2C%0A%20%20%20%20%7B%20name%3A%20'USC%20Citations'%2C%20regex%3A%20%22((%3F%3AThe%20)%3F%5BA-Z%5D%5Ba-z%5D*%3F(%3F%3A%20%5BA-Z%5D%5Ba-z%5D*%3F)*%3F%7C%5BA-Z%5D%2B)%2C%5C%5Cs*(%5C%5Cd%2B)%5C%5Cs*U%5C%5C.%3FS%5C%5C.%3FC%5C%5C.%3F%5C%5Cs*(%C2%A7%7B0%2C2%7D%5C%5Cs*%5B0-9a-zA-Z.-%5D%2B)%3F(%3F%3A%5C%5Cs*et%5C%5Cs*seq%5C%5C.)%3F(%3F%3A%5C%5Cs*%5C%5C((%5C%5Cd%7B4%7D)%5C%5C))%3F%22%2C%20defaultGroups%3A%20'1%2C2%2C3%2C4'%2C%20defaultHeader%3A%20'Full%20Citation%2CTitle%2CCode%2CYear'%2C%20defaultdelimiter%3A%20'%2C'%2C%20defaulteol%3A%20'%5C%5Cn'%20%7D%2C%0A%20%20%20%20%7B%20name%3A%20'Federal%20Case%20Names'%2C%20regex%3A%20%22(((%5BA-Z%5D%5B%5E%2C%5D*%3F)(%3F%3A%2C%20Inc%5C.)%3F%20%5BvV%5D%5C%5C.%20(.*%3F))%2C%20(%5C%5Cd%2B%20(F%5C%5C.2d%7CF%5C%5C.3d%7CF%5C%5C.4th%7CU%5C%5C.S%5C%5C.)%20%5C%5Cd%2B)(%20%5C%5C(((1st%7C2nd%7C2d%7C3d%7C3rd%7C%5B4-9%5Dth)%20%5BCc%5Dir%5C%5C.%20%5C%5Cd%2B%7C%5C%5Cd%2B)%5C%5C))%3F)%22%2C%20defaultGroups%3A%20'0%2C2%2C5%2C8'%2C%20defaultHeader%3A%20'Full%20Citation%2CCase%20Name%2CCitation%2CCircuit%20Year'%2C%20defaultdelimiter%3A%20'%2C'%2C%20defaulteol%3A%20'%5C%5Cn'%20%7D%2C%0A%20%20%20%20%7B%20name%3A%20'Names'%2C%20regex%3A%20%22(%5BA-Z%5D%5Ba-z'-%5D%2B)(%3F%3A%20(%5BA-Z%5D%5Ba-z'-%5D%2B%7C(%5BA-Z%5D%5C%5C.)%3F)%7C)(%20(%5BA-Z%5D%5Ba-z%5D%2B(%3F%3A-%5BA-Z%5D%5Ba-z'-%5D%2B)%3F))%22%2C%20defaultGroups%3A%20'0'%2C%20defaultHeader%3A%20'First%20name%2C%20middle%20name%20or%20initial%2C%20last%20name'%2C%20defaultdelimiter%3A%20'%2C'%2C%20defaulteol%3A%20'%5C%5Cn'%20%7D%2C%0A%20%20%20%20%7B%20name%3A%20'Dates'%2C%20regex%3A%20%22((%3F%3A%5C%5Cd%7B1%2C2%7D%5B-%2F%5D%5C%5Cd%7B1%2C2%7D%5B-%2F%5D%5C%5Cd%7B4%7D)%7C(%3F%3A%5C%5Cd%7B1%2C2%7D(%3F%3Ast%7Cnd%7Crd%7Cth)%3F%5C%5Cs*(%3F%3AJan(%3F%3Auary)%3F%7CFeb(%3F%3Aruary)%3F%7CMar(%3F%3Ach)%3F%7CApr(%3F%3Ail)%3F%7CMay%7CJun(%3F%3Ae)%3F%7CJul(%3F%3Ay)%3F%7CAug(%3F%3Aust)%3F%7CSep(%3F%3Atember)%3F%7COct(%3F%3Aober)%3F%7CNov(%3F%3Aember)%3F%7CDec(%3F%3Aember))%5C%5Cs*%2C%3F%5C%5Cs*%5C%5Cd%7B4%7D)%7C(%3F%3AJan(%3F%3Auary)%3F%7CFeb(%3F%3Aruary)%3F%7CMar(%3F%3Ach)%3F%7CApr(%3F%3Ail)%3F%7CMay%7CJun(%3F%3Ae)%3F%7CJul(%3F%3Ay)%3F%7CAug(%3F%3Aust)%3F%7CSep(%3F%3Atember)%3F%7COct(%3F%3Aober)%3F%7CNov(%3F%3Aember)%3F%7CDec(%3F%3Aember))%5C%5Cs*%5C%5Cd%7B1%2C2%7D(%3F%3Ast%7Cnd%7Crd%7Cth)%3F%5C%5Cs*%2C%3F%5C%5Cs*%5C%5Cd%7B4%7D)%22%2C%20defaultGroups%3A%20'0'%2C%20defaultHeader%3A%20'Date'%2C%20defaultdelimiter%3A%20'%2C'%2C%20defaulteol%3A%20'%5C%5Cn'%20%7D%2C%0A%20%20%20%20%7B%20name%3A%20'Massachusetts%20General%20Law'%2C%20regex%3A%20%22%5C%5Cb(%3F%3A%5C%5Cd%2B%5C%5Cs*)%3FM%5C%5C.G%5C%5C.L%5C%5C.%3F%5C%5Cs*c%5C%5C.%5C%5Cs*%5C%5Cd%2B(%3F%3A%2C%5C%5Cs*%C2%A7%5C%5Cs*%5C%5Cd%2B)%3F(%3F%3A%5C%5Cs*%5C%5C(%5C%5Cs*%5C%5Cd%2B%5C%5Cs*%5C%5C))%3F%5C%5Cb%22%2C%20defaultGroups%3A%20'0'%2C%20defaultHeader%3A%20'MGL%20Citation'%2C%20defaultdelimiter%3A%20'%2C'%2C%20defaulteol%3A%20'%5C%5Cn'%20%7D%0A%20%20%5D%3B%0A%20%20%0A%20%20window.updateValues%20%3D%20function%20(selectedPatternIndex)%20%7B%0A%20%20%20%20%2F%2F%20Update%20input%20fields%20with%20the%20new%20values%0A%20%20%20%20document.getElementById('regex_inputs').value%20%3D%20patterns%5BselectedPatternIndex%5D.regex%3B%0A%20%20%20%20document.getElementById('regex_groups').value%20%3D%20patterns%5BselectedPatternIndex%5D.defaultGroups%3B%0A%20%20%20%20document.getElementById('header').value%20%3D%20patterns%5BselectedPatternIndex%5D.defaultHeader%3B%0A%20%20%20%20document.getElementById('delimiter').value%20%3D%20patterns%5BselectedPatternIndex%5D.defaultdelimiter%3B%0A%20%20%20%20document.getElementById('eol').value%20%3D%20patterns%5BselectedPatternIndex%5D.defaulteol%3B%0A%20%20%7D%0A%20%20%0A%20%20window.get_matches%20%3D%20function%20(first_run%20%3D%201)%20%7B%0A%20%20%20%20window.results%20%3D%20%22%22%3B%0A%0A%20%20%20%20%2F%2F%20Ensure%20that%20formattedDate%20is%20defined%0A%20%20%20%20formattedDate%20%3D%20formattedDate%20%7C%7C%20(new%20Date().toLocaleDateString().replace(%2F%5C%2F%2Fg%2C%20'.'))%3B%0A%0A%20%20%20%20var%20patternSelect%20%3D%20%22%3Cselect%20id%3D'patternSelect'%20style%3D'width%3A100%25'%20onchange%3D'updateValues(this.selectedIndex)'%3E%22%3B%0A%20%20%20%20for%20(var%20i%20%3D%200%3B%20i%20%3C%20patterns.length%3B%20i%2B%2B)%20%7B%0A%20%20%20%20%20%20patternSelect%20%2B%3D%20%22%3Coption%20value%3D'%22%20%2B%20i%20%2B%20%22'%3E%22%20%2B%20patterns%5Bi%5D.name%20%2B%20%22%3C%2Foption%3E%22%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20if%20(first_run%20!%3D%201)%20%7B%0A%20%20%20%20%20%20this_regex%20%3D%20RegExp(document.getElementById('regex_inputs').value%2C%20%22g%22)%3B%0A%20%20%20%20%20%20group_set%20%3D%20%5B%5D%3B%0A%20%20%20%20%20%20groups%20%3D%20document.getElementById('regex_groups').value.split(%22%2C%22)%3B%0A%0A%20%20%20%20%20%20handles%20%3D%20%5B...document.body.innerHTML.matchAll(this_regex)%5D.map(match%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Convert%20groupIndex%20to%20number%20and%20join%20all%20groups%20into%20a%20single%20string%0A%20%20%20%20%20%20%20%20%2F%2Freturn%20%5BJSON.stringify(groups.map(groupIndex%20%3D%3E%20match%5BNumber(groupIndex)%5D).join('%20'))%5D%3B%0A%20%20%20%20%20%20%20%20%2F%2Flet%20jsonStringifiedArray%20%3D%20groups.map(item%20%3D%3E%20JSON.stringify(item))%3B%0A%20%20%20%20%20%20%20%20return%20%5Bgroups.map(groupIndex%20%3D%3E%20JSON.stringify(match%5BNumber(groupIndex)%5D)).join(document.getElementById('delimiter').value)%5D%3B%0A%20%20%20%20%20%20%7D)%3B%0A%0A%20%20%20%20%20%20handles%20%3D%20%5B...new%20Set(handles)%5D%3B%0A%20%20%20%20%20%20if%20(handles.length%20%3E%200)%20%7B%0A%20%20%20%20%20%20%20%20window.results%20%2B%3D%20handles.join(document.getElementById('eol').value)%20%2B%20document.getElementById('eol').value%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20var%20newline%20%3D%20String.fromCharCode(13%2C%2010)%3B%0A%20%20%20%20%20%20count%20%3D%20(window.results.split(document.getElementById('eol').value).length%20-%201)%3B%0A%20%20%20%20%20%20window.results%20%3D%20window.results.replaceAll('%5C%5Cn'%2C%20newline)%3B%0A%20%20%20%20%20%20if%20(count%20%3D%3D%200)%20%7B%0A%20%20%20%20%20%20%20%20window.results%20%3D%20%22no%20matches%20found%22%3B%0A%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%2F%2F%20Update%20the%20selectedPatternIndex%20variable%0A%20%20%20%20%20selectedPatternIndex%20%3D%20document.getElementById('patternSelect').selectedIndex%3B%0A%0A%20%20%20%20%20%20%20%2F%2F%20Set%20window.currentPatternName%20to%20the%20name%20of%20the%20currently%20selected%20pattern%0A%20%20%20%20%20%20window.currentPatternName%20%3D%20patterns%5BselectedPatternIndex%5D.name%3B%0A%0A%20%20%20%20%20%20%0A%0A%20%20%20%20%20%2F%2F%20Call%20download_csv%20after%20processing%20all%20patterns%0A%20%20%20%20%20%2F%2Fwindow.download_csv(patterns%5BselectedPatternIndex%5D.name%2C%20results%2C%20formattedDate)%3B%0A%0A%20%20%20%20%7D%20else%20%7B%0A%20%20%20%20%20%20count%20%3D%200%3B%0A%20%20%20%20%20%20results%20%3D%20%22%22%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20document.body.innerHTML%20%2B%3D%20%22%3Cdiv%20id%3D'regexspacer'%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3Cbr%3E%3C%2Fdiv%3E%3Cdiv%20id%3D'regexfind'%20style%3D'position%3Afixed%3Bz-index%3A100000%3Bbottom%3A0px%3Bwidth%3A100%25%3Btext-align%3Acenter%3Bbackground%3A%23eee%3Bpadding%3A5px%2015px%2025px%2015px%3Bborder-top%3A%20solid%201px%20black%3B'%3E%3Cp%20style%3D'padding%3A8px%200px%203px%200px%3B'%3EPattern%20%22%20%2B%20patternSelect%20%2B%0A%20%20%20%20%20%20%22regex%20%3Cinput%20id%3D'regex_inputs'%20style%3D'width%3A100%25'%2F%3E%22%20%2B%0A%20%20%20%20%20%20%22Group(s)%3Cinput%20id%3D'regex_groups'%20style%3D'width%3A100%25'%2F%3EHeaders%3Cinput%20id%3D'header'%20%20style%3D'width%3A100%25'%2F%3Edelimiter%3Cinput%20id%3D'delimiter'%20style%3D'width%3A100%25'%2F%3EEnd%20of%20Line%3Cinput%20id%3D'eol'%20%20style%3D'width%3A100%25'%2F%3E%3C%2Fp%3E%3Cp%20style%3D'padding%3A8px%200px'%3E%22%20%2B%20count%20%2B%20%22%20items%20found%20%7C%20%3Ca%20href%3D''%20target%3D'_blank'%3Estand-alone%3C%2Fa%3E%20%7C%20%3Ca%20href%3D'javascript%3Aget_matches(0)%3B'%3Erun%3C%2Fa%3E%20%7C%20%3Ca%20href%3D'javascript%3Aget_matches(0)%3B'%3Erun%20%26amp%3B%20add%3C%2Fa%3E%20%7C%20%3Ca%20href%3D'javascript%3Adownload_csv()%3B'%3Edownload%20csv%3C%2Fa%3E%20%7C%20%3Ca%20href%3D'javascript%3Adocument.getElementById(%60regexfind%60).remove()%3Bdocument.getElementById(%60regexspacer%60).remove()%3B'%3Eclose%3C%2Fa%3E%3C%2Fp%3E%3Ctextarea%20id%3D'headers'%20style%3D'width%3A100%25%3Bheight%3A180px%3Bbackground%3Awhite%3B'%3E%22%20%2B%20results%20%2B%20%22%3C%2Ftextarea%3E%3C%2Fdiv%3E%22%3B%0A%20%20%7D%0A%20%20%0A%20%20get_matches(1)%3B%7D)()%3B">bookmarklet</a>">Drag me to your bookmarks bar</a>
+
+        <h3>Full Code</h3>
+        <a href="github_link" target="_blank">View the full code on GitHub</a>
+    </div>
+    </div>
+    <div id="ProjectOrigin" class="tabcontent">
+        <h2>Project Origin</h2>
+        <h3>Personal Bio</h3>
+        <p>
+            I am a 3L at Suffolk Law School and am taking a course on Coding the Law; my first time engaging in any type of coding activity. The final project was an open ended prompt to create a tool that could save a legal practitioner time. 
+        </p>
+        <h3>Project Origin</h3>
+        <p>
+            For the final course projcet, I had several ideas, but wanted to make a way to easily extract data from webpages without manually copying and pasting it. Luckily, Professor Colarusso had already created a tool that could do this, but the tool relied upon a user to manually enter in the REGEX string and the corresponding groups. I wanted to create a tool that would allow the user to select from a list of pre-defined REGEX strings and groups.
+        </p>
+        <p>
+            To see how the code has evolved, check out the orignal code on GitHub here.
+            <a href="https://github.com/SuffolkLITLab/regex2csv" target="_blank"> View on GitHub</a>
+        </p>
+        <h3>Existing Solutions</h3>
+        <h3>Tools Used</h3>
+        <h4>Chat GPT</h4>
+        <p>
+            Chat GPT was one of the first places I went to help understand and code in Javascipt. It became my partner in crime as I worked through the code and tried to understand what was happening. I would often use it to generate text to see if I could understand what was happening in the code or to generate variations of the code so I could test out different ideas.
+        </p>
+        <h4>Bookmarklet Generator</h4>
+        <p>
+            This tool was used to create the bookmarklet. It was a simple tool that allowed me to enter in the code and then it would generate the bookmarklet for me. 
+        </p>
+        <p>
+            Check it out here. 
+            <a href="https://caiorss.github.io/bookmarklet-maker/" target="_blank"> View on GitHub</a>
+        </p>
+        <h4>REGEX 101</h4>
+        <p>
+            This tool was used to test out the REGEX strings and groups. It was a simple tool that allowed me to try out different REGEX strings and groups and see what they would match, while keeping an eye on the groups to identify which portions were creating the most trouble. The strings created here needed additional tweaking to operate correctly in javascript, but it was a great starting point.
+        </p>
+        <p>
+            Check it out here. 
+            <a href="https://regex101.com/" target="_blank"> View on GitHub</a>
+        </p>
+
+        <h4>Github Copilot</h4>
+        <p>
+            The final, but most effective tool I used was Github's Copiolot AI. This tool was easily installed as an extension inside of VS Code and was able to generate code based on the comments I left in the code. It was a great way to quickly generate code and then I could go back and tweak it to fit my needs. Best of all, it was accesiable as a student for free!
+        </p>
+    </div>
+    <div id="Building" class="tabcontent">
+        <h2>Building</h2>
+        <h3>Pattern Array</h3>
+        <p> 
+            The first step was to create an array of patterns that would be used to match the data. I wanted to create a tool that would be able to extract data from a variety of sources, so I created a list of patterns that would be able to extract data from a variety of sources. After selecting my patterns to use (Federal Case names, USC Citations, Dates, Emails, Names, and Phone Numbers), I then created a list of REGEX strings that would be able to match the data. 
+        </p>
+        <p>
+            The original code used a local storage function to store the default pattern, which was for Mastodon handles at the time. Removing the locaal storage and creating an array which assigned default values for each pattern proved a difficult task, but with the help of Chat GPT, the array had been properly created and the next step was to create an update values function which would call the array and update the values in the user interface before finding matches.
+        </p>
+        <h3>Regex Strings and Groups</h3>
+        <p> 
+            Consistently an issue, the REGEX strings were a source of constant frustration. I would often find a string that would work in REGEX 101, but would not work in the code. I would then have to go back and tweak the string until it was able to successfully extract the data. 
+        </p>
+        <h3>File name and URL</h3>
+        <p> 
+            One of the steps I took to increase user friendlieness was to implement a dynamic file name function. Instead of generating a basic file name, I wanted to create a file name that would be more descriptive and include the pattern that was used, as well as the date the data was extracted. 
+        </p>
+        <p>
+            Additonally, I wanted to include the URL of the page that the data was extracted from. This would allow the user to easily identify where the data came from and would allow them to go back and check the source if needed.
+        </p>
+    </div>
+    <div id="Testing" class="tabcontent">
+        <h2>Testing</h2>
+        <h3>Control Groups</h3>
+        <h3>Actual Use</h3>
+    </div>
+    <div id="BuildingAgain" class="tabcontent">
+        <h2>Building Again</h2>
+        <p> 
+            After testing, I realized that the tool was not as accurate as I had hoped. I decided to go back to the drawing board and rework the tool. The biggest challenged was correctly sorting the capturing groups into the correct CSV columns. This was solved by numerous re-works of the REGEX strings and corresponding default groups and delimiters. Further, adding in a JSON stringify feature allowed the entire matched data to be concactenated into the first column. 
+        </p>
+        <iframe src="https://chat.openai.com/share/eb5e254b-b0b7-455b-9e56-9f2fdc6bb042" width="50%" height="250px"></iframe>
+        <p>
+            Once the data was neatly populating into the correct CSV columns, A final challenge was to change the automatic download of the csv upon finding matches to a user initiated download. This was solved by adding a button to the bookmarklet that would trigger the download and by removing the automatic call to the download function.
+        </p>
+    </div>
+    <div id="MVP" class="tabcontent">
+        <h2>MVP and Next Steps</h2>
+        <h3>Minimum Viable Product</h3>
+        <p>
+            In it's current state this bookmarklet can.......
+        </p>
+        <p>
+            It currently struggles with .....
+        </p>
+        <h3>Next Steps</h3>
+        <p>
+            It could be furthered improved by .....
+        </p>
+        <h3>Client Leter</h3>
+        <p>
+            Enter in client letter here about the final result/make reference to the input received from prof as he is also kind of the client.
+        </p>
+    </div>
+    <div id="TryMe" class="tabcontent">
+        <h2>Try Me Out!</h2>
+        <p>
+            In the dynamic landscape of data scraping, our regex tool exhibits remarkable versatility across diverse domains. For instance, it effortlessly extracts individuals' names, discerning identities like Alice Williams, Robert Turner, Samantha Davis, Emily Thompson, and Michael Rodriguez, including hyphenated names such as Jennifer Johnson-Smith and David Turner-Rodriguez. When it comes to contact details, the tool adeptly navigates various phone number formats, capturing (123) 456-7890, +44 20 7946 0958, and 987-654-3210 ext. 567 with precision. The tool extends its prowess to email addresses, parsing information from sources like contact@domain.com and support@example.org. This tool particularly shines in handling legal references, effortlessly dissecting complex citations such as 76 M.G.L. c. 234, § 567 (2022) and landmark cases like U.S. v. A. Research Corp., 551 U.S. 128 (2007). Additionally, it navigates through a range of federal court cases, incorporating examples like United Techs. Corp. v. Browning-Ferris Indus., 33 F.3d 96 (1st Cir. 1994), W.R. Grace & Co. V. Zotos Intern., Inc., 559 F.3d 85, 90 (2nd cir. 2009), and New Castle County v. Halliburton NUS Corp., 111 F.3d 1116 (3d Cir. 1997). The inclusion of diverse legal references such as The Clean Water Act, 33 U.S.C. §1251 et seq. (1972), the Clean Air Act, 42 U.S.C., CERCLA, 42 U.S.C. 9601, and the Federal Power Act, 16 U.S.C. §§ 791-825r, further demonstrates the tool's adaptability.
+        </p>
+        <p>
+            Transitioning to another facet of data extraction, the tool excels in capturing intricate information from diverse sources. It adeptly handles various email addresses, ranging from admin@company.com to customer.support@example.org. Phone numbers in formats like 1-800-123-4567, (555) 789-0123, and +91 98765-43210 are accurately extracted. People's names, from Jennifer Johnson to Michael Rodriguez, are recognized with precision, showcasing the tool's ability to navigate various naming conventions. Legal citations, such as 29 U.S.C. § 801 (2018) and 45 M.G.L. c. 321, § 123 (Sample Title), are effortlessly parsed. The tool seamlessly dissects complex court cases, including high-stakes scenarios like ABC Corp. v. XYZ Ltd., 987 F.3d 654 (6th Cir. 2021) and Smith v. Jones, 123 U.S. 456 (1998).
+        </p>
+        <p>
+            Additionally, the tool adapts seamlessly to diverse date formats, including January 1, 2023, Jan 1, 2023, 01/1/2023, 01/1/23, 1/1/23, 1/01/2023, January 1st 2023, 1-1-2023, 01-01-2023, 01-01-23, Jan 1, 23, jan 1, 2023, and Jan 1, 2023
+        </p>
+        <p>
+            In the ever-evolving landscape of data extraction, our regex tool remains at the forefront, offering unmatched precision and adaptability. Confronted with a myriad of email addresses such as sales@company.net, john.doe@domain.org, and inquiries@example.co.uk, the tool consistently delivers accurate results. Diverse phone number formats, including (123) 456-7890, 987-654-3210, and +44 20 1234 5678, are effortlessly recognized. Legal references, exemplified by 18 U.S.C. § 2345 (2006) and 56 M.G.L. c. 789, § 567 (2023), are parsed accurately. Even within the intricate realm of court cases, the tool excels, successfully extracting details from cases like XYZ Corp. v. ABC Inc., 876 F.3d 432 (5th Cir. 2019), and Doe v. Roe, 789 U.S. 123 (2005), as well as statutes like The Clean Water Act, 33 U.S.C. §1251 et seq. (1972), and the Federal Power Act, 16 U.S.C. §§ 791-825r.
+        </p>
+        <p> Example generated by ChatGPT. Do not rely on the any of the data presented for accuracy.</p>
+    </div>
+
+    <script>
+        function openTab(tabId) {
+            var i, tabcontent;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            document.getElementById(tabId).style.display = "block";
+        }
+    
+        function copyToClipboard() {
+            var copyText = document.getElementById("Bookmarklet");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("copy");
+        }
+    </script>
+</script>
+</body>
+</html>
